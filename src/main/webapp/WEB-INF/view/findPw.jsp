@@ -83,10 +83,20 @@
           dataType:"json",
           success : function(result){
             if(result.length < 1) {
-              return alert("입력하신 정보로 PW를 못찾음");
+              return alert("입력하신 정보가 일치하지 않습니다");
             }
             
-            alert($("#email").val() + "ID의 PW는 " + result[0].user_password + "입니다.");
+            let strLength = Math.floor(result[0].user_password.length / 2);
+            let str = result[0].user_password.substr(0, strLength);
+            let strScTemp = result[0].user_password.substr(strLength);
+            let strSc = "";
+            
+            for(let i = 0; i < strScTemp.length; i++){
+              strSc += "*";
+            }
+
+            alert($("#email").val() + "ID의 PW는 " + str + strSc + " 입니다.");          
+            // alert($("#email").val() + "ID의 PW는 " + result[0].user_password + "입니다.");
             window.location.href = "/login";
           },
           error : function(jqXHR,textStatus,errorThrown){
